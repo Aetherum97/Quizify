@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(python -c \"import tkinter; print\\(''Tkinter OK —'', tkinter.TkVersion\\)\")",
+      "Bash(python main_gui.py)"
     ]
   }
 }
