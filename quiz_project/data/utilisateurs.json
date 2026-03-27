@@ -33,6 +33,26 @@
         "theme": "Géographie",
         "score": 60,
         "date": "2026-03-27"
+      },
+      {
+        "theme": "Sciences",
+        "score": 80,
+        "date": "2026-03-27"
+      },
+      {
+        "theme": "Géographie",
+        "score": 0,
+        "date": "2026-03-27"
+      },
+      {
+        "theme": "Géographie",
+        "score": 0,
+        "date": "2026-03-27"
+      },
+      {
+        "theme": "Géographie",
+        "score": 20,
+        "date": "2026-03-27"
       }
     ]
   }

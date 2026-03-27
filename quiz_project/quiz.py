@@ -6,12 +6,8 @@ import json
 import os
 import random
 
-from utils import (
-    afficher_separateur,
-    afficher_titre,
-    saisie_choix,
-    effacer_ecran
-)
+from bonus.timer import Timer
+from utils import afficher_separateur, afficher_titre, effacer_ecran
 
 
 class Question:
@@ -162,11 +158,22 @@ class Quiz:
         for i, option in enumerate(question.options, 1):
             print(f"    {i}. {option}")
 
-        choix_valides = [str(i) for i in range(1, len(question.options) + 1)]
-        choix = saisie_choix("\nVotre reponse (numero) : ", choix_valides)
+        choix_valides = [
+            str(i) for i in range(1, len(question.options) + 1)
+        ]
 
-        reponse_choisie = question.options[int(choix) - 1]
-        correct = question.verifier_reponse(reponse_choisie)
+        print()
+        timer = Timer()
+        choix = timer.attendre_reponse(
+            "Votre reponse (numero) : ", duree_max=30
+        )
+
+        if choix is None or choix.strip() not in choix_valides:
+            reponse_choisie = "(aucune)"
+            correct = False
+        else:
+            reponse_choisie = question.options[int(choix.strip()) - 1]
+            correct = question.verifier_reponse(reponse_choisie)
 
         if correct:
             print("\n  [OK] Bonne reponse !")
@@ -229,6 +236,7 @@ class Quiz:
         elif self.score_pourcentage >= 40:
             message = "Peut mieux faire..."
         else:
-            message = "Il faudra retravailler ce theme !"
+            message = ("Vous etes mauvais.. "
+            "Mais bon c'est peut être a cause de la moulinette !")
 
         print(f"\n  {message}\n")
