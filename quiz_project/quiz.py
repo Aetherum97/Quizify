@@ -27,8 +27,6 @@ class Question:
         self._options = options
         self._reponse = reponse
 
-    # --- Propriétés ---
-
     @property
     def id(self) -> int:
         return self._id
@@ -49,8 +47,6 @@ class Question:
     def reponse(self) -> str:
         return self._reponse
 
-    # --- Méthode principale ---
-
     def verifier_reponse(self, reponse_utilisateur: str) -> bool:
         """Retourne True si la réponse de l'utilisateur est correcte."""
         return reponse_utilisateur.strip() == self._reponse.strip()
@@ -69,10 +65,7 @@ class Quiz:
         self._theme = theme
         self._melanger = melanger
         self._questions = []
-        # Chaque élément : (Question, reponse_choisie: str, correct: bool)
         self._resultats = []
-
-    # --- Propriétés ---
 
     @property
     def theme(self) -> str:
@@ -93,8 +86,6 @@ class Quiz:
         if not self._questions:
             return 0
         return round(self.score / len(self._questions) * 100)
-
-    # --- Chargement ---
 
     def charger_questions(self, fichier: str) -> None:
         """
@@ -161,8 +152,6 @@ class Quiz:
 
         return sorted(set(q["theme"] for q in donnees))
 
-    # --- Jeu ---
-
     def _poser_question(
         self, question: Question, numero: int, total: int
     ) -> bool:
@@ -208,8 +197,6 @@ class Quiz:
                 input("\nAppuyez sur Entree pour continuer...")
                 effacer_ecran()
         return self.score_pourcentage
-
-    # --- Résumé ---
 
     def afficher_resume(self) -> None:
         """Affiche le récapitulatif détaillé du quiz."""

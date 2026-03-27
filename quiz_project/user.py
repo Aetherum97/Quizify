@@ -14,9 +14,7 @@ class User:
 
     def __init__(self, nom: str):
         self._nom = nom
-        self._scores = []  # liste de dict {"theme", "score", "date"}
-
-    # --- Propriétés ---
+        self._scores = []
 
     @property
     def nom(self) -> str:
@@ -25,8 +23,6 @@ class User:
     @property
     def scores(self) -> list:
         return self._scores
-
-    # --- Méthodes ---
 
     def ajouter_score(
         self, theme: str, score: int, date_str: str = None
@@ -88,8 +84,6 @@ class UserManager:
         self._fichier = fichier
         self._users: dict[str, User] = {}
 
-    # --- Persistance ---
-
     def charger(self) -> None:
         """
         Charge les utilisateurs depuis le fichier JSON.
@@ -118,7 +112,6 @@ class UserManager:
 
     def sauvegarder(self) -> None:
         """Sauvegarde tous les utilisateurs dans le fichier JSON."""
-        # Crée le dossier parent si nécessaire
         dossier = os.path.dirname(self._fichier)
         if dossier and not os.path.exists(dossier):
             os.makedirs(dossier)
@@ -127,8 +120,6 @@ class UserManager:
 
         with open(self._fichier, "w", encoding="utf-8") as f:
             json.dump(donnees, f, ensure_ascii=False, indent=2)
-
-    # --- Gestion des utilisateurs ---
 
     def get_user(self, nom: str) -> User:
         """Retourne l'utilisateur par nom, le cree s'il n'existe pas."""
