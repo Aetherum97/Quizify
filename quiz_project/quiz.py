@@ -6,13 +6,21 @@ import json
 import os
 import random
 
-from utils import afficher_separateur, afficher_titre, saisie_choix
+from utils import (
+    afficher_separateur,
+    afficher_titre,
+    saisie_choix,
+    effacer_ecran
+)
 
 
 class Question:
     """Représente une question du quiz avec ses options et sa bonne réponse."""
 
-    def __init__(self, id: int, theme: str, question: str, options: list, reponse: str):
+    def __init__(
+        self, id: int, theme: str, question: str,
+        options: list, reponse: str
+    ):
         self._id = id
         self._theme = theme
         self._question = question
@@ -52,7 +60,10 @@ class Question:
 
 
 class Quiz:
-    """Gère le déroulement d'un quiz : chargement, jeu et résumé des résultats."""
+    """Gere le deroulement d'un quiz.
+
+    Methodes : chargement, jeu et resume des resultats.
+    """
 
     def __init__(self, theme: str = None, melanger: bool = True):
         self._theme = theme
@@ -93,7 +104,9 @@ class Quiz:
         ValueError si le JSON est invalide ou si aucune question n'est trouvée.
         """
         if not os.path.exists(fichier):
-            raise FileNotFoundError(f"Fichier de questions introuvable : {fichier}")
+            raise FileNotFoundError(
+                f"Fichier de questions introuvable : {fichier}"
+            )
 
         with open(fichier, "r", encoding="utf-8") as f:
             try:
@@ -102,7 +115,9 @@ class Quiz:
                 raise ValueError(f"Fichier JSON invalide : {e}")
 
         if not isinstance(donnees, list):
-            raise ValueError("Le fichier JSON doit contenir une liste de questions.")
+            raise ValueError(
+                "Le fichier JSON doit contenir une liste de questions."
+            )
 
         questions = [
             Question(
@@ -116,10 +131,16 @@ class Quiz:
         ]
 
         if self._theme:
-            questions = [q for q in questions if q.theme.lower() == self._theme.lower()]
+            questions = [
+                q for q in questions
+                if q.theme.lower() == self._theme.lower()
+            ]
 
         if not questions:
-            indication = f' pour le thème "{self._theme}"' if self._theme else ""
+            indication = (
+                f' pour le theme "{self._theme}"'
+                if self._theme else ""
+            )
             raise ValueError(f"Aucune question trouvée{indication}.")
 
         if self._melanger:
@@ -129,9 +150,11 @@ class Quiz:
 
     @staticmethod
     def get_themes(fichier: str) -> list:
-        """Retourne la liste triée des thèmes disponibles dans le fichier JSON."""
+        """Liste triee des themes disponibles dans le fichier JSON."""
         if not os.path.exists(fichier):
-            raise FileNotFoundError(f"Fichier de questions introuvable : {fichier}")
+            raise FileNotFoundError(
+                f"Fichier de questions introuvable : {fichier}"
+            )
 
         with open(fichier, "r", encoding="utf-8") as f:
             donnees = json.load(f)
@@ -140,9 +163,10 @@ class Quiz:
 
     # --- Jeu ---
 
-    def _poser_question(self, question: Question, numero: int, total: int) -> bool:
-        """Affiche une question, attend la réponse et retourne True si correcte."""
-        afficher_separateur()
+    def _poser_question(
+        self, question: Question, numero: int, total: int
+    ) -> bool:
+        """Affiche une question, attend la reponse, True si correct."""
         print(f"\nQuestion {numero}/{total}  —  Theme : {question.theme}")
         print(f"\n  {question.question}\n")
 
@@ -171,7 +195,9 @@ class Quiz:
         Lève RuntimeError si aucune question n'a été chargée.
         """
         if not self._questions:
-            raise RuntimeError("Aucune question chargée. Appelez charger_questions() d'abord.")
+            raise RuntimeError(
+                "Aucune question chargée. Appelez charger_questions() d'abord."
+            )
 
         self._resultats = []
         total = len(self._questions)
@@ -180,7 +206,7 @@ class Quiz:
             self._poser_question(question, i, total)
             if i < total:
                 input("\nAppuyez sur Entree pour continuer...")
-
+                effacer_ecran()
         return self.score_pourcentage
 
     # --- Résumé ---
@@ -190,7 +216,9 @@ class Quiz:
         titre = f"RESUME — {self._theme}" if self._theme else "RESUME DU QUIZ"
         afficher_titre(titre)
 
-        print(f"\n  Score final : {self.score}/{len(self._questions)} ({self.score_pourcentage}%)\n")
+        nb = len(self._questions)
+        pct = self.score_pourcentage
+        print(f"\n  Score final : {self.score}/{nb} ({pct}%)\n")
         afficher_separateur()
 
         for i, (question, reponse, correct) in enumerate(self._resultats, 1):

@@ -25,7 +25,9 @@ def afficher_separateur(char: str = "-", largeur: int = 50) -> None:
     print(char * largeur)
 
 
-def saisie_choix(prompt: str, choix_valides: list, message_erreur: str = None) -> str:
+def saisie_choix(
+    prompt: str, choix_valides: list, message_erreur: str = None
+) -> str:
     """
     Demande une saisie et valide qu'elle fait partie des choix acceptés.
     Boucle jusqu'à obtenir une réponse valide.
@@ -40,9 +42,10 @@ def saisie_choix(prompt: str, choix_valides: list, message_erreur: str = None) -
         if reponse in choix_valides:
             return reponse
 
+        opts = ", ".join(choix_valides)
         erreur = (
             message_erreur
-            or f"Choix invalide. Options possibles : {', '.join(choix_valides)}"
+            or f"Choix invalide. Options possibles : {opts}"
         )
         print(f"  [!] {erreur}")
 
@@ -62,4 +65,6 @@ def saisie_texte(prompt: str, min_len: int = 1) -> str:
         if len(reponse) >= min_len:
             return reponse
 
-        print(f"  [!] La saisie doit contenir au moins {min_len} caractère(s).")
+        print(
+            f"  [!] La saisie doit contenir au moins {min_len} caractere(s)."
+        )

@@ -68,8 +68,10 @@ def jouer(user_manager: UserManager, nom_utilisateur: str) -> None:
         return
 
     label = theme if theme else "Tous les themes"
+    nb_q = len(quiz.questions)
     afficher_titre(
-        "C'est parti !", f"Theme : {label}  —  {len(quiz.questions)} question(s)"
+        "C'est parti !",
+        f"Theme : {label}  -  {nb_q} question(s)"
     )
 
     try:

@@ -28,7 +28,9 @@ class User:
 
     # --- Méthodes ---
 
-    def ajouter_score(self, theme: str, score: int, date_str: str = None) -> None:
+    def ajouter_score(
+        self, theme: str, score: int, date_str: str = None
+    ) -> None:
         """Ajoute un score à l'historique de l'utilisateur."""
         if date_str is None:
             date_str = date.today().isoformat()
@@ -45,16 +47,26 @@ class User:
         print(f"\n  {'Theme':<20} {'Score':>8}   {'Date'}")
         afficher_separateur()
         for entree in self._scores:
-            print(f"  {entree['theme']:<20} {entree['score']:>7}%   {entree['date']}")
+            t = entree['theme']
+            s = entree['score']
+            d = entree['date']
+            print(f"  {t:<20} {s:>7}%   {d}")
         afficher_separateur()
 
         # Statistiques par thème
         themes = set(e["theme"] for e in self._scores)
         print("\n  Moyennes par theme :")
         for theme in sorted(themes):
-            scores_theme = [e["score"] for e in self._scores if e["theme"] == theme]
+            scores_theme = [
+                e["score"] for e in self._scores
+                if e["theme"] == theme
+            ]
             moyenne = round(sum(scores_theme) / len(scores_theme))
-            print(f"    - {theme:<18} : {moyenne}% (sur {len(scores_theme)} partie(s))")
+            nb = len(scores_theme)
+            print(
+                f"    - {theme:<18} : {moyenne}%"
+                f" (sur {nb} partie(s))"
+            )
         print()
 
     def to_dict(self) -> dict:
@@ -99,7 +111,10 @@ class UserManager:
                 "Le fichier utilisateurs.json doit contenir un objet JSON."
             )
 
-        self._users = {nom: User.from_dict(nom, data) for nom, data in donnees.items()}
+        self._users = {
+            nom: User.from_dict(nom, data)
+            for nom, data in donnees.items()
+        }
 
     def sauvegarder(self) -> None:
         """Sauvegarde tous les utilisateurs dans le fichier JSON."""
@@ -116,7 +131,7 @@ class UserManager:
     # --- Gestion des utilisateurs ---
 
     def get_user(self, nom: str) -> User:
-        """Retourne l'utilisateur correspondant au nom, le crée s'il n'existe pas."""
+        """Retourne l'utilisateur par nom, le cree s'il n'existe pas."""
         if nom not in self._users:
             self._users[nom] = User(nom)
         return self._users[nom]
