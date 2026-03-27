@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/spook/Documents/Developpement/Master/Python/Quizify/quiz_project/*.py /c/Users/spook/Documents/Developpement/Master/Python/Quizify/quiz_project/bonus/*.py)"
+    ]
+  }
+}

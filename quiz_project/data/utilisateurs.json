@@ -1,13 +1,34 @@
 {
- "Alice": {
-  "scores": [
-   {"theme": "Python", "score": 80, "date": "2024-04-15"},
-   {"theme": "Histoire", "score": 60, "date": "2024-04-15"}
-  ]
- },
- "Bob": {
-  "scores": [
-   {"theme": "Python", "score": 100, "date": "2024-04-15"}
-  ]
- }
+  "Alice": {
+    "scores": [
+      {
+        "theme": "Python",
+        "score": 80,
+        "date": "2024-04-15"
+      },
+      {
+        "theme": "Histoire",
+        "score": 60,
+        "date": "2024-04-15"
+      }
+    ]
+  },
+  "Bob": {
+    "scores": [
+      {
+        "theme": "Python",
+        "score": 100,
+        "date": "2024-04-15"
+      }
+    ]
+  },
+  "Toinou": {
+    "scores": [
+      {
+        "theme": "Python",
+        "score": 83,
+        "date": "2026-03-27"
+      }
+    ]
+  }
 }

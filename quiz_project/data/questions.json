@@ -1,16 +1,156 @@
 [
- {
-  "id": 1,
-  "theme": "Python",
-  "question": "Quelle est la sortie de print(type(3)) ?",
-  "options": ["<class 'int'>", "<class 'str'>", "<class 'float'>", "<class 'bool'>"],
-  "reponse": "<class 'int'>"
- },
- {
-  "id": 2,
-  "theme": "Histoire",
-  "question": "En quelle année Christophe Colomb a-t-il découvert l'Amérique ?",
-  "options": ["1492", "1620", "1776", "1945"],
-  "reponse": "1492"
- }
+  {
+    "id": 1,
+    "theme": "Python",
+    "question": "Quelle est la sortie de print(type(3)) ?",
+    "options": ["<class 'int'>", "<class 'str'>", "<class 'float'>", "<class 'bool'>"],
+    "reponse": "<class 'int'>"
+  },
+  {
+    "id": 2,
+    "theme": "Python",
+    "question": "Quelle méthode permet d'ajouter un élément à la fin d'une liste ?",
+    "options": ["add()", "append()", "insert()", "push()"],
+    "reponse": "append()"
+  },
+  {
+    "id": 3,
+    "theme": "Python",
+    "question": "Quel mot-clé est utilisé pour définir une fonction en Python ?",
+    "options": ["function", "def", "fun", "func"],
+    "reponse": "def"
+  },
+  {
+    "id": 4,
+    "theme": "Python",
+    "question": "Que retourne l'expression 5 // 2 en Python ?",
+    "options": ["2.5", "3", "2", "1"],
+    "reponse": "2"
+  },
+  {
+    "id": 5,
+    "theme": "Python",
+    "question": "Quel type de données stocke des paires clé-valeur en Python ?",
+    "options": ["list", "tuple", "set", "dict"],
+    "reponse": "dict"
+  },
+  {
+    "id": 6,
+    "theme": "Python",
+    "question": "Comment vérifier si une clé existe dans un dictionnaire ?",
+    "options": ["key in dict", "dict.exists(key)", "dict.has(key)", "dict.contains(key)"],
+    "reponse": "key in dict"
+  },
+  {
+    "id": 7,
+    "theme": "Histoire",
+    "question": "En quelle année Christophe Colomb a-t-il découvert l'Amérique ?",
+    "options": ["1492", "1620", "1776", "1945"],
+    "reponse": "1492"
+  },
+  {
+    "id": 8,
+    "theme": "Histoire",
+    "question": "En quelle année a débuté la Révolution française ?",
+    "options": ["1776", "1789", "1804", "1815"],
+    "reponse": "1789"
+  },
+  {
+    "id": 9,
+    "theme": "Histoire",
+    "question": "En quelle année le mur de Berlin est-il tombé ?",
+    "options": ["1985", "1987", "1989", "1991"],
+    "reponse": "1989"
+  },
+  {
+    "id": 10,
+    "theme": "Histoire",
+    "question": "Qui a été le premier homme à marcher sur la Lune ?",
+    "options": ["Buzz Aldrin", "Yuri Gagarin", "Neil Armstrong", "John Glenn"],
+    "reponse": "Neil Armstrong"
+  },
+  {
+    "id": 11,
+    "theme": "Histoire",
+    "question": "Quelle période correspond à la Première Guerre mondiale ?",
+    "options": ["1904-1908", "1914-1918", "1939-1945", "1950-1953"],
+    "reponse": "1914-1918"
+  },
+  {
+    "id": 12,
+    "theme": "Histoire",
+    "question": "Quel empire Napoléon Bonaparte a-t-il fondé ?",
+    "options": ["L'Empire romain", "L'Empire ottoman", "Le Premier Empire français", "L'Empire austro-hongrois"],
+    "reponse": "Le Premier Empire français"
+  },
+  {
+    "id": 13,
+    "theme": "Sciences",
+    "question": "Quelle est la formule chimique de l'eau ?",
+    "options": ["CO2", "H2O", "O2", "NaCl"],
+    "reponse": "H2O"
+  },
+  {
+    "id": 14,
+    "theme": "Sciences",
+    "question": "Quelle est la planète la plus proche du Soleil ?",
+    "options": ["Vénus", "Terre", "Mars", "Mercure"],
+    "reponse": "Mercure"
+  },
+  {
+    "id": 15,
+    "theme": "Sciences",
+    "question": "Quel est le symbole chimique du fer ?",
+    "options": ["Fr", "Fe", "Fo", "Fi"],
+    "reponse": "Fe"
+  },
+  {
+    "id": 16,
+    "theme": "Sciences",
+    "question": "Combien de paires de chromosomes possède l'être humain ?",
+    "options": ["22", "23", "24", "46"],
+    "reponse": "23"
+  },
+  {
+    "id": 17,
+    "theme": "Sciences",
+    "question": "Quelle est la vitesse approximative de la lumière ?",
+    "options": ["150 000 km/s", "200 000 km/s", "300 000 km/s", "400 000 km/s"],
+    "reponse": "300 000 km/s"
+  },
+  {
+    "id": 18,
+    "theme": "Géographie",
+    "question": "Quelle est la capitale de l'Australie ?",
+    "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "reponse": "Canberra"
+  },
+  {
+    "id": 19,
+    "theme": "Géographie",
+    "question": "Quel est le plus grand pays du monde par superficie ?",
+    "options": ["Canada", "États-Unis", "Chine", "Russie"],
+    "reponse": "Russie"
+  },
+  {
+    "id": 20,
+    "theme": "Géographie",
+    "question": "Sur quel continent se trouve l'Égypte ?",
+    "options": ["Asie", "Europe", "Afrique", "Amérique"],
+    "reponse": "Afrique"
+  },
+  {
+    "id": 21,
+    "theme": "Géographie",
+    "question": "Combien de continents y a-t-il sur Terre ?",
+    "options": ["5", "6", "7", "8"],
+    "reponse": "7"
+  },
+  {
+    "id": 22,
+    "theme": "Géographie",
+    "question": "Quelle est la plus haute montagne du monde ?",
+    "options": ["K2", "Mont Blanc", "Mont Everest", "Kilimandjaro"],
+    "reponse": "Mont Everest"
+  }
 ]
