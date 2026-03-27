@@ -1,0 +1,16 @@
+[
+ {
+  "id": 1,
+  "theme": "Python",
+  "question": "Quelle est la sortie de print(type(3)) ?",
+  "options": ["<class 'int'>", "<class 'str'>", "<class 'float'>", "<class 'bool'>"],
+  "reponse": "<class 'int'>"
+ },
+ {
+  "id": 2,
+  "theme": "Histoire",
+  "question": "En quelle année Christophe Colomb a-t-il découvert l'Amérique ?",
+  "options": ["1492", "1620", "1776", "1945"],
+  "reponse": "1492"
+ }
+]

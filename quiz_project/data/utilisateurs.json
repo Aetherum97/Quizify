@@ -1,0 +1,13 @@
+{
+ "Alice": {
+  "scores": [
+   {"theme": "Python", "score": 80, "date": "2024-04-15"},
+   {"theme": "Histoire", "score": 60, "date": "2024-04-15"}
+  ]
+ },
+ "Bob": {
+  "scores": [
+   {"theme": "Python", "score": 100, "date": "2024-04-15"}
+  ]
+ }
+}
