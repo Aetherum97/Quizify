@@ -5,7 +5,6 @@ __author__ = "caps_a"
 import os
 import sys
 
-# Force l'encodage UTF-8 sur le terminal Windows
 if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stdin.reconfigure(encoding="utf-8", errors="replace")
@@ -20,7 +19,6 @@ from utils import (
     saisie_texte,
 )
 
-# --- Chemins des fichiers de données ---
 _BASE = os.path.dirname(__file__)
 QUESTIONS_FILE = os.path.join(_BASE, "data", "questions.json")
 UTILISATEURS_FILE = os.path.join(_BASE, "data", "utilisateurs.json")
@@ -140,10 +138,8 @@ def main() -> None:
     except ValueError as e:
         print(f"\n  [!] Erreur lors du chargement des utilisateurs : {e}")
         print("  Le fichier utilisateurs.json sera reinitialise.\n")
-        # On repart avec un UserManager vide
         user_manager = UserManager(UTILISATEURS_FILE)
 
-    # Identification de l'utilisateur
     print()
     nom_utilisateur = saisie_texte("Entrez votre nom d'utilisateur : ")
 
