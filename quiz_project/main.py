@@ -9,6 +9,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stdin.reconfigure(encoding="utf-8", errors="replace")
 
+from bonus.scoreboard import Scoreboard
 from quiz import Quiz
 from user import UserManager
 from utils import (
@@ -22,6 +23,7 @@ from utils import (
 _BASE = os.path.dirname(__file__)
 QUESTIONS_FILE = os.path.join(_BASE, "data", "questions.json")
 UTILISATEURS_FILE = os.path.join(_BASE, "data", "utilisateurs.json")
+SCOREBOARD_FILE = os.path.join(_BASE, "bonus", "scoreboard.csv")
 
 
 def choisir_theme() -> str | None:
@@ -48,8 +50,12 @@ def choisir_theme() -> str | None:
     return None  # "Tous les themes"
 
 
-def jouer(user_manager: UserManager, nom_utilisateur: str) -> None:
-    """Lance une partie de quiz pour l'utilisateur connecté."""
+def jouer(
+    user_manager: UserManager,
+    scoreboard: Scoreboard,
+    nom_utilisateur: str,
+) -> None:
+    """Lance une partie de quiz pour l'utilisateur connecte."""
     effacer_ecran()
     theme = choisir_theme()
     if theme is None and not _questions_disponibles():
@@ -82,11 +88,21 @@ def jouer(user_manager: UserManager, nom_utilisateur: str) -> None:
 
     score = quiz.score_pourcentage
     user_manager.enregistrer_score(nom_utilisateur, label, score)
+    scoreboard.ajouter(nom_utilisateur, label, score)
     print(f"  Score sauvegarde : {score}%\n")
     input("Appuyez sur Entree pour revenir au menu...")
 
 
-def voir_resultats(user_manager: UserManager, nom_utilisateur: str) -> None:
+def voir_classement(scoreboard: Scoreboard) -> None:
+    """Affiche le classement global CSV."""
+    effacer_ecran()
+    scoreboard.afficher_classement()
+    input("Appuyez sur Entree pour revenir au menu...")
+
+
+def voir_resultats(
+    user_manager: UserManager, nom_utilisateur: str
+) -> None:
     """Affiche l'historique de scores de l'utilisateur connecté."""
     effacer_ecran()
     user_manager.afficher_resultats(nom_utilisateur)
@@ -102,24 +118,34 @@ def _questions_disponibles() -> bool:
     return True
 
 
-def menu_principal(user_manager: UserManager, nom_utilisateur: str) -> None:
+def menu_principal(
+    user_manager: UserManager,
+    scoreboard: Scoreboard,
+    nom_utilisateur: str,
+) -> None:
     """Boucle du menu interactif principal."""
     while True:
         effacer_ecran()
-        afficher_titre("Quizify", f"Connecte en tant que : {nom_utilisateur}")
+        afficher_titre(
+            "Quizify",
+            f"Connecte en tant que : {nom_utilisateur}",
+        )
         print()
         print("  1. Jouer")
         print("  2. Voir mes resultats")
-        print("  3. Quitter")
+        print("  3. Voir le classement")
+        print("  4. Quitter")
         print()
         afficher_separateur()
 
-        choix = saisie_choix("Votre choix : ", ["1", "2", "3"])
+        choix = saisie_choix("Votre choix : ", ["1", "2", "3", "4"])
 
         if choix == "1":
-            jouer(user_manager, nom_utilisateur)
+            jouer(user_manager, scoreboard, nom_utilisateur)
         elif choix == "2":
             voir_resultats(user_manager, nom_utilisateur)
+        elif choix == "3":
+            voir_classement(scoreboard)
         else:
             effacer_ecran()
             print("\n  Au revoir !\n")
@@ -136,14 +162,22 @@ def main() -> None:
     try:
         user_manager.charger()
     except ValueError as e:
-        print(f"\n  [!] Erreur lors du chargement des utilisateurs : {e}")
+        print(f"\n  [!] Erreur lors du chargement : {e}")
         print("  Le fichier utilisateurs.json sera reinitialise.\n")
         user_manager = UserManager(UTILISATEURS_FILE)
+
+    # Chargement du scoreboard
+    scoreboard = Scoreboard(SCOREBOARD_FILE)
+    try:
+        scoreboard.charger()
+    except Exception as e:
+        print(f"\n  [!] Erreur scoreboard : {e}")
+        scoreboard = Scoreboard(SCOREBOARD_FILE)
 
     print()
     nom_utilisateur = saisie_texte("Entrez votre nom d'utilisateur : ")
 
-    menu_principal(user_manager, nom_utilisateur)
+    menu_principal(user_manager, scoreboard, nom_utilisateur)
 
 
 if __name__ == "__main__":
