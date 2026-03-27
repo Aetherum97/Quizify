@@ -58,6 +58,16 @@
         "theme": "Python",
         "score": 100,
         "date": "2026-03-27"
+      },
+      {
+        "theme": "Mythology",
+        "score": 60,
+        "date": "2026-03-27"
+      },
+      {
+        "theme": "Python",
+        "score": 0,
+        "date": "2026-03-27"
       }
     ]
   }

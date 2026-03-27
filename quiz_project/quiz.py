@@ -148,6 +148,14 @@ class Quiz:
 
         return sorted(set(q["theme"] for q in donnees))
 
+    def charger_depuis_liste(self, questions: list) -> None:
+        """Charge des questions depuis une liste de Question."""
+        if not questions:
+            raise ValueError("La liste de questions est vide.")
+        if self._melanger:
+            random.shuffle(questions)
+        self._questions = questions
+
     def _poser_question(
         self, question: Question, numero: int, total: int
     ) -> bool:

@@ -9,6 +9,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stdin.reconfigure(encoding="utf-8", errors="replace")
 
+from bonus.api import ApiQuiz, CATEGORIES
 from bonus.scoreboard import Scoreboard
 from quiz import Quiz
 from user import UserManager
@@ -24,6 +25,29 @@ _BASE = os.path.dirname(__file__)
 QUESTIONS_FILE = os.path.join(_BASE, "data", "questions.json")
 UTILISATEURS_FILE = os.path.join(_BASE, "data", "utilisateurs.json")
 SCOREBOARD_FILE = os.path.join(_BASE, "bonus", "scoreboard.csv")
+
+
+def choisir_source() -> str:
+    """Demande a l'utilisateur la source des questions."""
+    afficher_titre("Source des questions")
+    print()
+    print("  1. Questions locales")
+    print("  2. Questions API  (Open Trivia Database)")
+    print()
+    return saisie_choix("Votre choix : ", ["1", "2"])
+
+
+def choisir_categorie_api() -> tuple:
+    """Affiche les categories API et retourne (nom, id_categorie)."""
+    afficher_titre("Categorie API")
+    print()
+    categories = list(CATEGORIES.items())
+    for i, (nom, _) in enumerate(categories, 1):
+        print(f"  {i:2}. {nom}")
+    print()
+    choix_valides = [str(i) for i in range(1, len(categories) + 1)]
+    choix = saisie_choix("Votre choix : ", choix_valides)
+    return categories[int(choix) - 1]
 
 
 def choisir_theme() -> str | None:
@@ -57,21 +81,46 @@ def jouer(
 ) -> None:
     """Lance une partie de quiz pour l'utilisateur connecte."""
     effacer_ecran()
-    theme = choisir_theme()
-    if theme is None and not _questions_disponibles():
-        return
-
+    source = choisir_source()
     effacer_ecran()
-    quiz = Quiz(theme=theme, melanger=True)
 
-    try:
-        quiz.charger_questions(QUESTIONS_FILE)
-    except (FileNotFoundError, ValueError) as e:
-        print(f"\n  [!] Impossible de charger les questions : {e}\n")
-        input("Appuyez sur Entree pour revenir au menu...")
-        return
+    if source == "1":
+        # --- Questions locales ---
+        theme = choisir_theme()
+        if theme is None and not _questions_disponibles():
+            return
+        quiz = Quiz(theme=theme, melanger=True)
+        try:
+            quiz.charger_questions(QUESTIONS_FILE)
+        except (FileNotFoundError, ValueError) as e:
+            print(f"\n  [!] {e}\n")
+            input("Appuyez sur Entree pour revenir au menu...")
+            return
+        label = theme if theme else "Tous les themes"
+    else:
+        # --- Questions API ---
+        nom_cat, id_cat = choisir_categorie_api()
+        effacer_ecran()
+        print(f"\n  Chargement depuis l'API ({nom_cat})...")
+        questions = ApiQuiz(id_cat).charger()
+        if questions is None:
+            print(
+                "  [!] API indisponible,"
+                " bascule sur les questions locales.\n"
+            )
+            quiz = Quiz(melanger=True)
+            try:
+                quiz.charger_questions(QUESTIONS_FILE)
+            except (FileNotFoundError, ValueError) as e:
+                print(f"\n  [!] {e}\n")
+                input("Appuyez sur Entree pour revenir au menu...")
+                return
+            label = "Tous les themes"
+        else:
+            quiz = Quiz(theme=nom_cat, melanger=True)
+            quiz.charger_depuis_liste(questions)
+            label = nom_cat
 
-    label = theme if theme else "Tous les themes"
     nb_q = len(quiz.questions)
     afficher_titre(
         "C'est parti !",
